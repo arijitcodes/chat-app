@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import useGlobalState from "../State/GlobalState";
 
 const TypeChat = () => {
   const [message, setMessage] = useState("");
+  const [socket] = useGlobalState("socket");
+  const [user] = useGlobalState("user");
 
   return (
     <div className="fixed-bottom my-md-4 mx-4">
@@ -20,7 +23,19 @@ const TypeChat = () => {
           />
         </div>
         <div className="col-auto">
-          <button type="submit" className="btn btn-outline-info mb-3">
+          <button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              socket.emit("message", {
+                user,
+                message,
+                timestamp: Date.now(),
+              });
+              setMessage("");
+            }}
+            className="btn btn-outline-info mb-3"
+          >
             Send
           </button>
         </div>

@@ -6,6 +6,8 @@ import useGlobalState from "../State/GlobalState";
 const AllChats = () => {
   const [user] = useGlobalState("user");
   const [room] = useGlobalState("room");
+  const [socket] = useGlobalState("socket");
+  const [messages, setMessages] = useGlobalState("messages");
 
   const [chatData, setChatData] = useState([
     {
@@ -50,7 +52,16 @@ const AllChats = () => {
   // const meUser = localStorage.getItem("chat-app-user");
   // const myRoom = JSON.parse(localStorage.getItem("chat-app-room")).room;
 
-  useEffect(() => {
+  /* useEffect(() => {
+    socket.on("message", (msg) => {
+      console.log("In Msg Listner");
+      console.log("Msg: ", msg);
+      setMessages((prev) => [...prev, msg]);
+      console.log(messages);
+    });
+  }, []); */
+
+  /*   useEffect(() => {
     setTimeout(() => {
       setChatData((prev) => [
         ...prev,
@@ -62,11 +73,11 @@ const AllChats = () => {
       ]);
     }, 3000);
   }, []);
-
+ */
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     bottomElementRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatData]);
+  }, [messages]);
 
   return (
     <>
@@ -78,10 +89,16 @@ const AllChats = () => {
           className="pre-scrollable overflow-auto"
           style={{ maxHeight: "75vh" }}
         >
-          {chatData &&
-            chatData.map((chat, index) => (
+          {messages &&
+            messages.map((chat, index) => (
               <div
-                align={chat.user === user ? "right" : ""}
+                align={
+                  chat.user === user
+                    ? "right"
+                    : chat.user.toLowerCase() === "bot"
+                    ? "center"
+                    : ""
+                }
                 key={index + "_" + chat.timestamp}
               >
                 <ChatItem data={chat} index={index} />

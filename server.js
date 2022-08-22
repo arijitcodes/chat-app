@@ -8,6 +8,7 @@ const app = express();
 const users = new Map();
 
 // Middlewares
+app.use(cors());
 
 // Express API Server Routes
 // Test Route - to check if server is up or not
@@ -39,7 +40,14 @@ const server = app.listen(PORT, (err) => {
 });
 
 // Socket.IO System
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
+  },
+});
 
 // on Successful Socket Connection Event
 io.on("connection", (socket) => {
@@ -47,29 +55,36 @@ io.on("connection", (socket) => {
 
   // on Join Room Event
   socket.on("joinRoom", ({ room, user }) => {
-    socket.join(room);
-    users.set(socket.id, { room, user });
-    socket.broadcast.to(room).emit("message", {
-      user: "Bot",
-      message: `${user} has joined the chat...`,
-      timestamp: Date.now(),
-    });
+    if (!users.has(socket.id)) {
+      socket.join(room);
+      users.set(socket.id, { room, user });
+      socket.broadcast.to(room).emit("message", {
+        user: "Bot",
+        message: `${user} has joined the chat...`,
+        timestamp: Date.now(),
+      });
+      console.log(`joinRoom - User: ${user}, Room: ${room}`);
+    }
   });
 
   // on Message Event
   socket.on("message", (msg) => {
-    io.to(users.get(socket.id).room).emit("message", msg);
+    if (users.has(socket.id)) {
+      io.to(users.get(socket.id).room).emit("message", msg);
+    }
   });
 
   // On Socket Disconnection
   socket.on("disconnect", () => {
-    const userData = users.get(socket.id);
-    users.delete(socket.id);
-    socket.broadcast.to(userData.room).emit("message", {
-      user: "Bot",
-      message: `${userData.user} has left the chat...`,
-      timestamp: Date.now(),
-    });
+    if (users.has(socket.id)) {
+      const userData = users.get(socket.id);
+      users.delete(socket.id);
+      socket.broadcast.to(userData.room).emit("message", {
+        user: "Bot",
+        message: `${userData.user} has left the chat...`,
+        timestamp: Date.now(),
+      });
+    }
     console.log("User Disconnected. Socker ID: ", socket.id);
   });
 });
