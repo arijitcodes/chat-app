@@ -12,7 +12,12 @@ const ChatItem = ({ data }) => {
         className={`card ${
           !isBot && "rounded rounded-3"
         } text-muted text-start mx-4 my-4 col-8 col-md-5`}
-        style={{ backgroundColor: "#0e0e0e" }}
+        style={{
+          backgroundColor: "#0e0e0e",
+          // width: "fit-content",
+          // minWidth: "calc(18rem)",
+          // maxWidth: "60%",
+        }}
       >
         <div className="card-body">
           <h5 className={`card-title fw-bold ${isBot && "d-none"}`}>{`${

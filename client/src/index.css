@@ -25,5 +25,9 @@ code {
 }
 
 .custom-username-input {
-  height: 100vh;
+  height: calc(100vh - 63px);
+}
+
+.custom-body-height-allchat {
+  height: calc(100vh - 175px);
 }

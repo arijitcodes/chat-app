@@ -21,18 +21,18 @@ function App() {
   useEffect(() => {
     if (socket && (socket.connected === true || socket.connected === false)) {
       socket.on("connect", () => {
-        console.log(socket.connected); // true
+        // console.log(socket.connected); // true
 
         socket.on("message", (msg) => {
-          console.log("In Msg Listner");
-          console.log("Msg: ", msg);
+          // console.log("In Msg Listner");
+          // console.log("Msg: ", msg);
           setMessages((prev) => [...prev, msg]);
-          console.log(messages);
+          // console.log(messages);
         });
       });
 
       socket.on("disconnect", () => {
-        console.log(socket.connected); // false
+        // console.log(socket.connected); // false
       });
     }
   }, [socket]);
@@ -104,8 +104,8 @@ function App() {
                   user,
                   room: room.name,
                 };
-                console.log("Payload: ", payload);
-                console.log(typeof payload);
+                // console.log("Payload: ", payload);
+                // console.log(typeof payload);
                 tmp.emit("joinRoom", payload);
                 setSocket(tmp);
                 // console.log("Connection: ", socket.connected);

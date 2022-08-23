@@ -7,7 +7,7 @@ const TypeChat = () => {
   const [user] = useGlobalState("user");
 
   return (
-    <div className="fixed-bottom my-md-4 mx-4">
+    <div className="fixed-bottom mt-4 mx-4">
       <form className="row g-3">
         <div className="col">
           <label htmlFor="message" className="visually-hidden">

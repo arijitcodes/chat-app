@@ -84,10 +84,10 @@ const AllChats = () => {
       <div className="mb-2">
         👉🏻 <strong>Room: </strong> {room.name} 👉🏻 <strong>User: </strong> {user}
       </div>
-      <div className="mt-4 mx-4 pt-4 border rounded-3 border-info border-3">
+      <div className="custom-body-height-allchat mt-4 mx-4 pt-4 border rounded-3 border-info border-3">
         <div
           className="pre-scrollable overflow-auto"
-          style={{ maxHeight: "75vh" }}
+          style={{ maxHeight: "calc(100vh - 210px)" }}
         >
           {messages &&
             messages.map((chat, index) => (
