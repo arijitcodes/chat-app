@@ -19,7 +19,8 @@ const AllChats = () => {
   return (
     <>
       <div className="mb-2">
-        👉🏻 <strong>Room: </strong> {room.name} 👉🏻 <strong>User: </strong> {user}
+        👉🏻 <strong className="text-danger">Room: </strong> {room.name} 👉🏻{" "}
+        <strong className="text-warning">User: </strong> {user}
       </div>
       <div className="custom-body-height-allchat mt-4 mx-4 pt-4 border rounded-3 border-info border-3">
         <div
