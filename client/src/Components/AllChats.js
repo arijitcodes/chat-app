@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ChatItem from "./ChatItem";
 
 import useGlobalState from "../State/GlobalState";
@@ -6,74 +6,11 @@ import useGlobalState from "../State/GlobalState";
 const AllChats = () => {
   const [user] = useGlobalState("user");
   const [room] = useGlobalState("room");
-  const [socket] = useGlobalState("socket");
-  const [messages, setMessages] = useGlobalState("messages");
-
-  const [chatData, setChatData] = useState([
-    {
-      user: "User 1",
-      message: "Hi",
-      timestamp: Date.now(),
-    },
-    {
-      user: "User 3",
-      message: "Hiii",
-      timestamp: Date.now(),
-    },
-    {
-      user: "User 1",
-      message: "Hello",
-      timestamp: Date.now(),
-    },
-    {
-      user: "User 2",
-      message: "Hello",
-      timestamp: Date.now(),
-    },
-    {
-      user: "User 1",
-      message: "Hi there User 2",
-      timestamp: Date.now(),
-    },
-    {
-      user: "User 2",
-      message: "What's up ?",
-      timestamp: Date.now(),
-    },
-    {
-      user: "User 4",
-      message:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, soluta quod? Facere molestiae doloribus nostrum, voluptate delectus est repellat enim.",
-      timestamp: Date.now(),
-    },
-  ]);
+  // const [socket] = useGlobalState("socket");
+  const [messages] = useGlobalState("messages");
 
   const bottomElementRef = useRef(null);
-  // const meUser = localStorage.getItem("chat-app-user");
-  // const myRoom = JSON.parse(localStorage.getItem("chat-app-room")).room;
 
-  /* useEffect(() => {
-    socket.on("message", (msg) => {
-      console.log("In Msg Listner");
-      console.log("Msg: ", msg);
-      setMessages((prev) => [...prev, msg]);
-      console.log(messages);
-    });
-  }, []); */
-
-  /*   useEffect(() => {
-    setTimeout(() => {
-      setChatData((prev) => [
-        ...prev,
-        {
-          user: "User Test",
-          message: "Late Message Scroll Test",
-          timestamp: Date.now(),
-        },
-      ]);
-    }, 3000);
-  }, []);
- */
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     bottomElementRef.current?.scrollIntoView({ behavior: "smooth" });
