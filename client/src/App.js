@@ -85,7 +85,7 @@ function App() {
             onClick={(e) => {
               e.preventDefault();
               if (user && user !== "") {
-                const tmp = io("localhost:5100");
+                const tmp = io();
                 const payload = {
                   user,
                   room: room.name,

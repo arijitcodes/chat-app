@@ -7,9 +7,8 @@ WORKDIR /app
 # COPY package*.json /app/
 # COPY src /app/src
 COPY . /app
-RUN ls /app/client
 RUN npm ci --production
-RUN npm install --prefix client
+RUN npm ci --production --prefix client
 RUN npm run build --prefix client
 RUN rm -rf client/node_modules
 
