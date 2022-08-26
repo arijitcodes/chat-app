@@ -1,5 +1,5 @@
 #  ----- FIRST STAGE -----
-FROM node:12 AS builder
+FROM node:16 AS builder
 
 ENV NODE_ENV=production
 WORKDIR /app
@@ -9,18 +9,18 @@ WORKDIR /app
 COPY . /app
 RUN ls /app/client
 RUN npm ci --production
-# RUN npm install --prefix client
+RUN npm install --prefix client
 RUN npm run build --prefix client
 RUN rm -rf client/node_modules
 
 
 #  ----- SECOND STAGE -----
-FROM node:12-alpine
+FROM node:16-alpine
 
 ENV NODE_ENV=production
 WORKDIR /app
 
-EXPOSE 5000
+EXPOSE 5100
 #RUN npm i -g nodemon
 COPY --from=builder /app /app/
 USER node
